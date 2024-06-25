@@ -2,6 +2,8 @@
 
 4 Python libraries are needed for this code, numpy, pandas, matplotlib, and seaborn.
 Before running this code, make sure you have all 4 libraries installed.
+If you don't have any installed yet, just run 
+pip install -r requirements.txt
 
 ## How to Use
   - Download the data from google sheets as a .csv file, for example: 031824 Astrocyte Analysis - Nuclei - FOV 8 AD
