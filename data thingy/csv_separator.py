@@ -5,7 +5,7 @@ import os
 cell_info_file = 'cell_info.csv'
 brightness_file = 'brightness.csv'
 other_file = 'other.csv'
-csv_file = '/Users/albert2/Desktop/data thingy/031824 Astrocyte Analysis - Nuclei - FOV 8 AD.csv'  
+csv_file = '/Users/albert2/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Cytoplasm - FOV 8 AD (1).csv'  
 
 def split_csv(input_file, output_file1, output_file2):
     df = pd.read_csv(csv_file)
@@ -34,7 +34,7 @@ def clean_brightness():
 
     # Write all lines except the first two back to the file
     with open(brightness_file, 'w', newline='') as file:
-        file.writelines(lines[2:])
+        file.writelines(lines[3:])
 
 def clean_and_extract_cell_info():
     with open(cell_info_file, 'r', newline='') as infile, \
