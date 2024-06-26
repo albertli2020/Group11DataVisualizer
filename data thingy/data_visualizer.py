@@ -55,26 +55,31 @@ time_points = np.arange(1, brightness_df.shape[0] + 1)
 
 # Plot live cells data on the first subplot
 for i, (col, (peak_value, peak_index)) in enumerate(zip(live_cells_data.columns, peaks_live)):
-    ax1.plot(brightness_df.index, live_cells_data[col], label=f'Live Cell {live_cells_range[0] + i} (peak: {peak_value:.2f} at t={(peak_index+1)*3})')  # Annotate peak value and time
+    ax1.plot(brightness_df.index * 3, live_cells_data[col], label=f'Live Cell {live_cells_range[0] + i} (peak: {peak_value:.2f} at t={(peak_index+1)*3})')  # Annotate peak value and time
 ax1.set_title('Live Cells')
 ax1.set_ylabel('Normalized Brightness')
 ax1.legend(loc='upper right')
+ax1.grid(True)
+
+
 
 # Plot dead cells data on the second subplot
 for i, (col, (peak_value, peak_index)) in enumerate(zip(dead_cells_data.columns, peaks_dead)):
-    ax2.plot(brightness_df.index, dead_cells_data[col], label=f'Dead Cell {dead_cells_range[0] + i} (peak: {peak_value:.2f} at t={(peak_index+1)*3})')  # Annotate peak value and time
+    ax2.plot(brightness_df.index * 3, dead_cells_data[col], label=f'Dead Cell {dead_cells_range[0] + i} (peak: {peak_value:.2f} at t={(peak_index+1)*3})')  # Annotate peak value and time
 ax2.set_title('Dead Cells')
-ax2.set_xlabel('Frame')
+ax2.set_xlabel('Time (seconds)')
 ax2.set_ylabel('Normalized Brightness')
 ax2.legend(loc='upper right')
+ax2.grid(True)
 
 # Add overall title
 plt.suptitle('Brightness Over Time for Live and Dead Cells')
 
 # Display the plot
 plt.tight_layout(rect=[0, 0.03, 1, 0.95])
+plt.gca().set_xlim(left=0)
+plt.gca().set_ylim(bottom=0)
 plt.show()
-
 
 
 
