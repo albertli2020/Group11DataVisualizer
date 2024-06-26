@@ -8,7 +8,7 @@ from matplotlib.widgets import RadioButtons
 
 
 
-original_file = '/Users/albert2/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Cytoplasm - FOV 8 AD (1).csv'
+original_file = '/Users/albert2/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Nuclei - FOV 8 AD.csv 21-40-06-675.csv'
 cell_info_path = 'cell_info.csv'
 brightness_path = 'brightness.csv'
 split_csv(original_file, cell_info_path,brightness_path)
@@ -112,7 +112,7 @@ for param in params_to_plot:
 plt.figure(figsize=(20, 15))
 for i, param in enumerate(params_to_plot):
     plt.subplot(4, 3, i+1)
-    sns.violinplot(x=cell_info_df[param], orient='h', scale='width', linewidth=2)
+    sns.violinplot(x=cell_info_df[param], orient='h', density_norm='width', linewidth=2)
     plt.ylabel('Density')
     plt.xlabel(param)
     plt.title(f'Violin Plot of {param}')

@@ -5,7 +5,7 @@ import os
 cell_info_file = 'cell_info.csv'
 brightness_file = 'brightness.csv'
 other_file = 'other.csv'
-csv_file = '/Users/albert2/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Cytoplasm - FOV 8 AD (1).csv'  
+csv_file = '/Users/albert2/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Nuclei - FOV 8 AD.csv 21-40-06-675.csv'  
 
 def split_csv(input_file, output_file1, output_file2):
     df = pd.read_csv(csv_file)
