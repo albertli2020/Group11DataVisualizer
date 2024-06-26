@@ -3,10 +3,8 @@ import pandas as pd
 import matplotlib.pyplot as plt
 import seaborn as sns
 from csv_separator import split_csv, clean_brightness, clean_and_extract_cell_info
-from matplotlib.widgets import RadioButtons
-
-
-
+#from matplotlib.widgets import RadioButtons
+from matplotlib.backend_bases import NavigationToolbar2
 
 original_file = '/Users/albert2/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Nuclei - FOV 8 AD.csv 21-40-06-675.csv'
 cell_info_path = 'cell_info.csv'
@@ -89,7 +87,7 @@ plt.show()
 
 live_cells_data = cell_info_df.iloc[live_cells, :]
 
-
+'''
 def create_violin_plot(param, cell_info_df):
 
     fig, ax = plt.subplots()  # Create a separate figure for each plot
@@ -103,18 +101,79 @@ def create_violin_plot(param, cell_info_df):
 violin_plots = []
 for param in params_to_plot:
     violin_plots.append(create_violin_plot(param, live_cells_data))
+'''
 
+                
+def update_plot():
+    global fig, axes
+    for ax in axes:
+        ax.clear()  # Clear the current axes
+    
+    start_idx = current_page * 6
+    end_idx = min(start_idx + 6, len(params_to_plot))
+    
+    for ax, param in zip(axes, params_to_plot[start_idx:end_idx]):
+        sns.violinplot(x=cell_info_df[param], orient='h', density_norm='width', linewidth=2, ax=ax)
+        ax.set_ylabel('Density')
+        ax.set_xlabel(param)
+        ax.set_title('')
+    
+    fig.suptitle('Violin Plots of Params ('+str(start_idx+1) + ' - ' + str(end_idx)+')', fontsize=16)
+    fig.tight_layout(rect=[0, 0, 1, 0.96])  # Adjust layout to make space for the title
+    fig.canvas.draw_idle()  # Redraw the figure
 
+# Function to plot subplots
+def init_subplots():
+    f, a = plt.subplots(2, 3, figsize=(10, 8))
+    a = a.flatten()
+    return f, a
 
+# Global variable to track the current page
+current_page = 0
+# Initialize plot
+fig, axes = init_subplots()
 
+def on_next():
+    global current_page
+    max_page = (len(params_to_plot) - 1) // 6
+    if current_page < max_page:
+        current_page += 1
+        update_plot()
 
+def on_prev():
+    global current_page
+    if current_page > 0:
+        current_page -= 1
+        update_plot()
 
+# Callback function for button press events
+def on_click(event):
+    if event.key == 'right':
+        on_next()
+    elif event.key == 'left':
+        on_prev()
+# Connect the event handler
+fig.canvas.mpl_connect('key_press_event', on_click)
 
+o_back = NavigationToolbar2.back
+o_forward = NavigationToolbar2.forward
+def n_back(self, *args, **kwargs):
+    on_prev()
+    o_back(self, *args, **kwargs)
+def n_forward(self, *args, **kwargs):
+    on_next()
+    o_forward(self, *args, **kwargs)
+NavigationToolbar2.back = n_back
+NavigationToolbar2.forward = n_forward
 
+update_plot()
+plt.show()
+NavigationToolbar2.back = o_back
+NavigationToolbar2.forward = o_forward
+#plt.clf()
 
-
-
-plt.figure(figsize=(20, 15))
+'''
+plt.figure(figsize=(10, 8)) #20, 15))
 for i, param in enumerate(params_to_plot):
     plt.subplot(4, 3, i+1)
     sns.violinplot(x=cell_info_df[param], orient='h', density_norm='width', linewidth=2)
@@ -123,6 +182,7 @@ for i, param in enumerate(params_to_plot):
     plt.title(f'Violin Plot of {param}')
 plt.tight_layout()
 plt.show()
+'''
 
 # Heatmap of correlations
 correlation_matrix = cell_info_df[params_to_plot].corr()
@@ -130,14 +190,6 @@ plt.figure(figsize=(10, 8))
 sns.heatmap(correlation_matrix, annot=True, cmap='coolwarm', center=0)
 plt.title('Heatmap of Correlations Between Parameters')
 plt.show()
-
-
-
-
-
-
-
-
 
 
 print("Summary statistics for 'other.csv':")
