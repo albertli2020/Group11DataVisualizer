@@ -6,7 +6,7 @@ from csv_separator import split_csv, clean_brightness, clean_and_extract_cell_in
 #from matplotlib.widgets import RadioButtons
 from matplotlib.backend_bases import NavigationToolbar2
 
-original_file = '/Users/albert2/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Nuclei - FOV 8 AD.csv 21-40-06-675.csv'
+original_file = '/Users/Albert/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Nuclei - FOV 8 AD.csv 21-40-06-675.csv'
 cell_info_path = 'cell_info.csv'
 brightness_path = 'brightness.csv'
 split_csv(original_file, cell_info_path,brightness_path)
