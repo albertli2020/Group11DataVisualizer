@@ -6,7 +6,7 @@ from csv_separator import split_csv, clean_brightness, clean_and_extract_cell_in
 #from matplotlib.widgets import RadioButtons
 from matplotlib.backend_bases import NavigationToolbar2
 
-original_file = '/Users/albert2/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Nuclei - FOV 8 AD.csv 21-40-06-675.csv'
+original_file = '/Users/Albert/Documents/GitHub/Group11DataVisualizer/data thingy/031824 Astrocyte Analysis - Nuclei - FOV 8 AD.csv 21-40-06-675.csv'
 cell_info_path = 'cell_info.csv'
 brightness_path = 'brightness.csv'
 split_csv(original_file, cell_info_path,brightness_path)
@@ -60,7 +60,7 @@ ax1.legend(loc='upper right')
 
 # Plot dead cells data on the second subplot
 for i, (col, (peak_value, peak_index)) in enumerate(zip(dead_cells_data.columns, peaks_dead)):
-    ax2.plot(brightness_df.index, dead_cells_data[col], label=f'Dead Cell {dead_cells_range[0] + i} (peak: {peak_value:.2f} at t={(peak_index+1)*3})')  # Annotate peak value and time
+    ax2.plot(brightness_df.index * 3, dead_cells_data[col], label=f'Dead Cell {dead_cells_range[0] + i} (peak: {peak_value:.2f} at t={(peak_index+1)*3})')  # Annotate peak value and time
 ax2.set_title('Dead Cells')
 ax2.set_xlabel('Frame')
 ax2.set_ylabel('Normalized Brightness')
